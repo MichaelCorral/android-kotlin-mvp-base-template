@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -16,20 +15,53 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField('String', "itunes_base_api", itunes_base_api)
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', "itunes_base_api", itunes_base_api)
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation androidKotlin.core
+    implementation androidKotlin.reflect
+
+    implementation androidx.appCompat
+    implementation androidx.recyclerView
+    implementation androidx.cardView
+    implementation androidx.constraintLayout
+    implementation androidx.design
+
+    testImplementation test.jUnit
+    androidTestImplementation test.testRunner
+    androidTestImplementation test.espresso
+    testImplementation test.mockito.core
+    androidTestImplementation test.mockito.android
+    androidTestImplementation test.room
+
+    implementation retrofit.core
+    implementation retrofit.converters.gson
+    implementation retrofit.converters.scalars
+
+    implementation rx.adapter
+    implementation rx.java
+    implementation rx.android
+
+    implementation glide.core
+    implementation glide.integration
+    kapt glide.kapt
+
+    implementation room.core
+    kapt room.kapt
+
+    implementation timber.core
+
+    implementation koin.core
+    implementation koin.scope
+    implementation koin.androidx
 }

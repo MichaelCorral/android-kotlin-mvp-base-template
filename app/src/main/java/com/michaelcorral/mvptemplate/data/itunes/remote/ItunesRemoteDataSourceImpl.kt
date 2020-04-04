@@ -9,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class ItunesRemoteDataSourceImpl(private val itunesService: ItunesService) :
     ItunesRemoteDataSource {
 
-    override fun fetchItunesContent(): Single<ItunesContentResponse> {
+    override fun retrieveItunesContent(): Single<ItunesContentResponse> {
         return itunesService
             .getItunesContent()
             .observeOn(AndroidSchedulers.mainThread())

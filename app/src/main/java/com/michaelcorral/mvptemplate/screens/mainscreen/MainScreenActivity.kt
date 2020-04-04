@@ -29,7 +29,7 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
     override fun onActivityReady(savedInstanceState: Bundle?, intent: Intent) {
         super.onActivityReady(savedInstanceState, intent)
 
-        presenter.setup()
+        presenter.initialize()
     }
 
     override fun redirectToLastScreen(screenId: String) {

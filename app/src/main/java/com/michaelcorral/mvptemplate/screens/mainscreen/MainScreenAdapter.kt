@@ -15,6 +15,38 @@ class MainScreenAdapter(
     private val onItunesContentClick: (item: ItunesContentResults) -> Unit
 ) : RecyclerView.Adapter<MainScreenAdapter.ViewHolder>() {
 
+    private val items = mutableListOf<ItunesContentResults>()
+
+    fun addItems(items: List<ItunesContentResults>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun addItem(item: ItunesContentResults) {
+        items.add(item)
+        notifyDataSetChanged()
+    }
+
+    fun updateItem(item: ItunesContentResults, index: Int) {
+        notifyItemChanged(index, item)
+    }
+
+    fun replaceItems(items: List<ItunesContentResults>) {
+        clearItems()
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun removeItem(index: Int) {
+        items.removeAt(index)
+        notifyDataSetChanged()
+    }
+
+    fun clearItems() {
+        items.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.michaelcorral.mvptemplate.R
-import org.koin.ext.getFullName
 import timber.log.Timber
 
 abstract class MvpActivity : AppCompatActivity() {

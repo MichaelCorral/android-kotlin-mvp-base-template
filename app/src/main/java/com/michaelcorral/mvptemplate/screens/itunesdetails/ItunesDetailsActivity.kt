@@ -25,7 +25,7 @@ class ItunesDetailsActivity : MvpActivity(), ItunesDetailsContract.View {
     override fun onActivityReady(savedInstanceState: Bundle?, intent: Intent) {
         super.onActivityReady(savedInstanceState, intent)
 
-        presenter.setup()
+        presenter.initialize()
     }
 
     override fun getItunesItemFromBundle(): ItunesContentResults? {

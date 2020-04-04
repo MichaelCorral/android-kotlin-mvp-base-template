@@ -48,7 +48,7 @@ abstract class MvpActivity : AppCompatActivity() {
         snackBar.show()
     }
 
-    fun showToast(message: String, duration: Int) {
+    fun showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(this, message, duration).show()
     }
 

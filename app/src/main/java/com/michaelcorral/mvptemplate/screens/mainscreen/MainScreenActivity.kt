@@ -71,4 +71,8 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
     override fun hideLoading() {
         hideLoadingDialog()
     }
+
+    override fun showMessage(message: String) {
+        showToast(message)
+    }
 }

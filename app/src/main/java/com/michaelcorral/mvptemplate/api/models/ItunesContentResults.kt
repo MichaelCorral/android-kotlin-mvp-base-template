@@ -1,9 +1,10 @@
 package com.michaelcorral.mvptemplate.api.models
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.math.BigDecimal
 
+@Parcelize
 data class ItunesContentResults(
     val trackId: Long? = 0L,
     val trackName: String? = "",
@@ -19,37 +20,4 @@ data class ItunesContentResults(
 
     val artworkUrl200: String?
         get() = artworkUrl100?.replace("100x100", "200x200")
-
-    constructor(source: Parcel) : this(
-        source.readValue(Long::class.java.classLoader) as Long?,
-        source.readString(),
-        source.readString(),
-        source.readSerializable() as BigDecimal?,
-        source.readString(),
-        source.readString(),
-        source.readString()
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeValue(trackId)
-        writeString(trackName)
-        writeString(artworkUrl100)
-        writeSerializable(trackPrice)
-        writeString(primaryGenreName)
-        writeString(longDescription)
-        writeString(currency)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<ItunesContentResults> =
-            object : Parcelable.Creator<ItunesContentResults> {
-                override fun createFromParcel(source: Parcel): ItunesContentResults =
-                    ItunesContentResults(source)
-
-                override fun newArray(size: Int): Array<ItunesContentResults?> = arrayOfNulls(size)
-            }
-    }
 }

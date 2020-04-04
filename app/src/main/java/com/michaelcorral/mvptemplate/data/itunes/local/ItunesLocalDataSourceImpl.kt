@@ -14,12 +14,12 @@ class ItunesLocalDataSourceImpl(private val itunesContentDao: ItunesContentDao) 
     ItunesLocalDataSource {
 
     override fun saveUserLastVisitDate(date: String) = SharedPreferencesManager.put(LastVisited, date)
-    override fun fetchUserLastVisitDate(): String =
+    override fun retrieveUserLastVisitDate(): String =
         SharedPreferencesManager.getString(LastVisited, defaultValue = Date().today())
 
     override fun saveLastScreenId(screenId: String) = SharedPreferencesManager.put(LastScreen, screenId)
 
-    override fun fetchLastScreenId(): String = SharedPreferencesManager.getString(LastScreen)
+    override fun retrieveLastScreenId(): String = SharedPreferencesManager.getString(LastScreen)
 
     override fun deleteAllItunesConent(): Completable {
         return itunesContentDao
@@ -29,7 +29,6 @@ class ItunesLocalDataSourceImpl(private val itunesContentDao: ItunesContentDao) 
     }
 
     override fun saveLastItunesContent(itunesItem: ItunesContentResults): Single<Long> {
-        //TODO: make toContent()
         val itunesContent = ItunesContent(
             id = itunesItem.trackId ?: 0L,
             trackName = itunesItem.trackName ?: "",
@@ -46,7 +45,7 @@ class ItunesLocalDataSourceImpl(private val itunesContentDao: ItunesContentDao) 
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun fetchLastItunesContent(): Single<ItunesContent> {
+    override fun retrieveLastItunesContent(): Single<ItunesContent> {
         return itunesContentDao
             .queryItunesContent()
             .subscribeOn(Schedulers.io())

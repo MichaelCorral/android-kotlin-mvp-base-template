@@ -3,7 +3,6 @@ package com.michaelcorral.mvptemplate.screens.itunesdetails
 
 import com.michaelcorral.mvptemplate.api.models.ItunesContentResults
 import com.michaelcorral.mvptemplate.data.itunes.ItunesRepository
-import com.michaelcorral.mvptemplate.screens.itunesdetails.ItunesDetailsContract
 import io.reactivex.disposables.CompositeDisposable
 
 class ItunesDetailsPresenter(
@@ -15,11 +14,11 @@ class ItunesDetailsPresenter(
 
     private var itunesItem: ItunesContentResults? = null
 
-    override fun setup() {
+    override fun initialize() {
         itunesItem = view?.getItunesItemFromBundle()
 
         if (itunesItem == null) {
-            fetchLastItunesContent()
+            retrieveLastItunesContent()
         } else {
             view?.displayItunesItem(itunesItem)
         }
@@ -43,12 +42,12 @@ class ItunesDetailsPresenter(
         }
     }
 
-    private fun fetchLastItunesContent() {
+    private fun retrieveLastItunesContent() {
         compositeDisposable.add(
             repository
-                .fetchLastItunesContent()
+                .retrieveItunesContent()
                 .subscribe { itunesContent ->
-                    itunesItem = itunesContent.toItunesContentResults(itunesContent)
+                    itunesItem = itunesContent.results[itunesContent.results.lastIndex]
                     view?.displayItunesItem(itunesItem)
                 }
         )

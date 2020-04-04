@@ -13,14 +13,14 @@ class ItunesRepository(
     private val remoteDataSource: ItunesRemoteDataSource
 ) : ItunesLocalDataSource, ItunesRemoteDataSource {
 
-    override fun fetchItunesContent(): Single<ItunesContentResponse> =
-        remoteDataSource.fetchItunesContent()
+    override fun retrieveItunesContent(): Single<ItunesContentResponse> =
+        remoteDataSource.retrieveItunesContent()
 
     override fun saveUserLastVisitDate(date: String) = localDataSource.saveUserLastVisitDate(date)
-    override fun fetchUserLastVisitDate(): String = localDataSource.fetchUserLastVisitDate()
+    override fun retrieveUserLastVisitDate(): String = localDataSource.retrieveUserLastVisitDate()
 
     override fun saveLastScreenId(screenId: String) = localDataSource.saveLastScreenId(screenId)
-    override fun fetchLastScreenId(): String = localDataSource.fetchLastScreenId()
+    override fun retrieveLastScreenId(): String = localDataSource.retrieveLastScreenId()
 
     override fun deleteAllItunesConent(): Completable =
         localDataSource.deleteAllItunesConent()
@@ -28,6 +28,6 @@ class ItunesRepository(
     override fun saveLastItunesContent(itunesItem: ItunesContentResults): Single<Long> =
         localDataSource.saveLastItunesContent(itunesItem)
 
-    override fun fetchLastItunesContent(): Single<ItunesContent> =
-        localDataSource.fetchLastItunesContent()
+    override fun retrieveLastItunesContent(): Single<ItunesContent> =
+        localDataSource.retrieveLastItunesContent()
 }

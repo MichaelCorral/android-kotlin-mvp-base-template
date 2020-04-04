@@ -6,5 +6,5 @@ import io.reactivex.Single
 
 interface ItunesRemoteDataSource : ItunesDataSource {
 
-    fun fetchItunesContent(): Single<ItunesContentResponse>
+    fun retrieveItunesContent(): Single<ItunesContentResponse>
 }

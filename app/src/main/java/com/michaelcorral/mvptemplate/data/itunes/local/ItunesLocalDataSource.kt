@@ -8,12 +8,12 @@ import io.reactivex.Single
 interface ItunesLocalDataSource : ItunesDataSource {
 
     fun saveUserLastVisitDate(date: String)
-    fun fetchUserLastVisitDate(): String
+    fun retrieveUserLastVisitDate(): String
 
     fun saveLastScreenId(screenId: String)
-    fun fetchLastScreenId(): String
+    fun retrieveLastScreenId(): String
 
     fun deleteAllItunesConent(): Completable
     fun saveLastItunesContent(itunesItem: ItunesContentResults): Single<Long>
-    fun fetchLastItunesContent(): Single<ItunesContent>
+    fun retrieveLastItunesContent(): Single<ItunesContent>
 }

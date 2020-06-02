@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 object SharedPreferencesManager {
 
-    private const val SHARED_PREFERENCES_NAME = "AppetiserSharedPreferences"
+    private const val SHARED_PREFERENCES_NAME = "SharedPreferences"
     private lateinit var sharedPreferences: SharedPreferences
 
     // Put shared pref keys here to prevent
@@ -38,12 +38,26 @@ object SharedPreferencesManager {
             .apply()
     }
 
+    fun put(key: Key, value: Boolean) {
+        getSharedPreferencesEditor()
+            .putBoolean(key.name, value)
+            .apply()
+    }
+
     fun getString(key: Key, defaultValue: String = ""): String {
-        return sharedPreferences.getString(key.name, defaultValue)!!
+        return sharedPreferences.getString(key.name, defaultValue) ?: ""
     }
 
     fun getInt(key: Key, defaultValue: Int = 0): Int {
         return sharedPreferences.getInt(key.name, defaultValue)
+    }
+
+    fun getLong(key: Key, defaultValue: Long = 0): Long {
+        return sharedPreferences.getLong(key.name, defaultValue)
+    }
+
+    fun getBoolean(key: Key, defaultValue: Boolean = false): Boolean {
+        return sharedPreferences.getBoolean(key.name, defaultValue)
     }
 
     fun remove(key: Key) {

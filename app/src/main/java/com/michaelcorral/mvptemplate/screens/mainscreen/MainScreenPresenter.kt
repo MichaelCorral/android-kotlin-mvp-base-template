@@ -15,26 +15,26 @@ class MainScreenPresenter(
 
     private var lastScreenId: String = ""
 
-    override fun setup() {
-        fetchScreenId()
+    override fun initialize() {
+        retrieveScreenId()
         displayUserLastVisited()
-        fetchItunesContent()
+        retrieveItunesContent()
         saveUserLastVisited()
     }
 
-    private fun fetchScreenId() {
-        lastScreenId = repository.fetchLastScreenId()
+    private fun retrieveScreenId() {
+        lastScreenId = repository.retrieveLastScreenId()
         view?.redirectToLastScreen(lastScreenId)
     }
 
     private fun displayUserLastVisited() {
-        view?.displayUserLastVisited(repository.fetchUserLastVisitDate())
+        view?.displayUserLastVisited(repository.retrieveUserLastVisitDate())
     }
 
-    private fun fetchItunesContent() {
+    private fun retrieveItunesContent() {
         compositeDisposable.add(
             repository
-                .fetchItunesContent()
+                .retrieveItunesContent()
                 .doOnSubscribe { view?.showLoading() }
                 .doFinally { view?.hideLoading() }
                 .subscribe { response ->

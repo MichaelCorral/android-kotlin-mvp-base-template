@@ -3,12 +3,11 @@ package com.michaelcorral.mvptemplate.screens.mainscreen
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.michaelcorral.mvptemplate.screens.itunesdetails.ItunesDetailsActivity
 import com.michaelcorral.mvptemplate.R
 import com.michaelcorral.mvptemplate.api.models.ItunesContentResults
+import com.michaelcorral.mvptemplate.screens.ScreenNavigator
 import com.michaelcorral.mvptemplate.base.BasePresenter
 import com.michaelcorral.mvptemplate.base.MvpActivity
-import com.michaelcorral.mvptemplate.constants.ITUNES_ITEM_KEY
 import kotlinx.android.synthetic.main.mainscreen_activity.*
 import org.koin.androidx.scope.currentScope
 import org.koin.core.parameter.parametersOf
@@ -17,6 +16,7 @@ import org.koin.ext.getFullName
 class MainScreenActivity : MvpActivity(), MainScreenContract.View {
 
     private val presenter: MainScreenContract.Presenter by currentScope.inject { parametersOf(this) }
+    private val screenNavigator: ScreenNavigator by currentScope.inject { parametersOf(this) }
 
     override fun getActivityLayout(): Int {
         return R.layout.mainscreen_activity
@@ -29,7 +29,7 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
     override fun onActivityReady(savedInstanceState: Bundle?, intent: Intent) {
         super.onActivityReady(savedInstanceState, intent)
 
-        presenter.setup()
+        presenter.initialize()
     }
 
     override fun redirectToLastScreen(screenId: String) {
@@ -42,7 +42,8 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
     }
 
     override fun displayUserLastVisited(date: String) {
-        mainScreenTextViewLastVisited.text = String.format(resources.getString(R.string.mainscreen_last_visited, date))
+        mainScreenTextViewLastVisited.text =
+            String.format(resources.getString(R.string.mainscreen_last_visited, date))
     }
 
     override fun displayItunesContent(itunesResults: List<ItunesContentResults>) {
@@ -50,8 +51,8 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
 
         mainScreenRecyclerView.adapter =
             MainScreenAdapter(
-            itunesResults = itunesResults,
-            onItunesContentClick = { item -> onItunesContentClick(item) })
+                itunesResults = itunesResults,
+                onItunesContentClick = { item -> onItunesContentClick(item) })
     }
 
     private fun onItunesContentClick(itunesItem: ItunesContentResults) {
@@ -59,9 +60,7 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
     }
 
     override fun redirectToItunesDetailsScreen(itunesItem: ItunesContentResults) {
-        val intent = Intent(this, ItunesDetailsActivity::class.java)
-        intent.putExtra(ITUNES_ITEM_KEY, itunesItem)
-        startActivity(intent)
+        screenNavigator.redirectToItunesDetailsScreen(itunesItem)
     }
 
     override fun showLoading() {
@@ -70,5 +69,9 @@ class MainScreenActivity : MvpActivity(), MainScreenContract.View {
 
     override fun hideLoading() {
         hideLoadingDialog()
+    }
+
+    override fun showMessage(message: String) {
+        showToast(message)
     }
 }

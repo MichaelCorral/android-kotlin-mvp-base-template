@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.michaelcorral.mvptemplate.R
-import org.koin.ext.getFullName
 import timber.log.Timber
 
 abstract class MvpActivity : AppCompatActivity() {
@@ -48,7 +47,7 @@ abstract class MvpActivity : AppCompatActivity() {
         snackBar.show()
     }
 
-    fun showToast(message: String, duration: Int) {
+    fun showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(this, message, duration).show()
     }
 

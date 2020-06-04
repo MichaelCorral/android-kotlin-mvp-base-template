@@ -1,3 +1,10 @@
 package com.michaelcorral.mvptemplate.api.models
 
-data class ItunesContentResponse(val results: List<ItunesContentResults>)
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class ItunesContentResponse(
+    @SerialName("results")
+    val results: List<ItunesContentResults>
+)
